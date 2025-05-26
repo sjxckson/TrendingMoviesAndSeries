@@ -1,12 +1,9 @@
-using System.Runtime.InteropServices.JavaScript;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 using Discord;
 using Discord.WebSocket;
 using RestSharp;
 using RestClient = RestSharp.RestClient;
 using TokenType = Discord.TokenType;
-using System.Environment;
 
 namespace MoviesAndSeriesBot
 {
@@ -25,41 +22,39 @@ namespace MoviesAndSeriesBot
 
         public async Task StartBotAsync()
         {
-            
             _client = new DiscordSocketClient();
-
             _client.Ready += LoginAndScrape;
-            
             _client.Log += LogFuncAsync;
-            await this._client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("DISCORD_TOKEN"););
+            await this._client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("DISCORD_TOKEN"));
             await this._client.StartAsync();
             await Task.Delay(-1);
-            
-
             async Task LogFuncAsync(LogMessage message) => Console.WriteLine(message.ToString());
         }
         
         public async Task LoginAndScrape()
         {
             DeleteTrendingMovieMessages();
+            Console.WriteLine($"");
             DeleteTrendingSeriesMessages();
+            Console.WriteLine($"");
             CallPopularMoviesAPI();
+            Console.WriteLine($"");
             CallPopularSeriesAPI();
+            Console.WriteLine($"");
             Environment.Exit(0);
         }
 
         private void DeleteTrendingMovieMessages()
-                 {
-                     ulong moviesTrendingChannel = 1376177846954754058;
-                     IMessageChannel channel = _client.GetChannel(moviesTrendingChannel) as IMessageChannel;
-                     var messages = channel.GetMessagesAsync(100).FlattenAsync();
-                     foreach (var message in messages.Result)
-                     {
-                         channel.DeleteMessageAsync((message));   
-                         Thread.Sleep(5000);
-                     }
-                     
-                 }
+        {
+            ulong moviesTrendingChannel = 1376177846954754058;
+            IMessageChannel channel = _client.GetChannel(moviesTrendingChannel) as IMessageChannel;
+            var messages = channel.GetMessagesAsync(100).FlattenAsync();
+            foreach (var message in messages.Result) 
+            {
+                channel.DeleteMessageAsync((message)); 
+                Thread.Sleep(5000); 
+            }
+        }
         
         private void DeleteTrendingSeriesMessages()
         {
@@ -71,12 +66,10 @@ namespace MoviesAndSeriesBot
                 channel.DeleteMessageAsync((message));   
                 Thread.Sleep(5000);
             }
-            
         }
 
         private void CallPopularMoviesAPI()
         {
-
             var options = new RestClientOptions("https://api.themoviedb.org/3/trending/movie/day?language=en-US");
             var client = new RestClient(options);
             var request = new RestRequest("");
@@ -102,7 +95,6 @@ namespace MoviesAndSeriesBot
         
         private void CallPopularSeriesAPI()
         {
-
             var options = new RestClientOptions("https://api.themoviedb.org/3/trending/tv/day?language=en-US");
             var client = new RestClient(options);
             var request = new RestRequest("");
