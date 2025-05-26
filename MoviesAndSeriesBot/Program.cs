@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Discord;
@@ -6,13 +6,13 @@ using Discord.WebSocket;
 using RestSharp;
 using RestClient = RestSharp.RestClient;
 using TokenType = Discord.TokenType;
+using System.Environment;
 
 namespace MoviesAndSeriesBot
 {
     internal class Program
     {
         private DiscordSocketClient _client;
-        private readonly string _token = "MTM3NjE2NjExNzY3MTcwMjY0MQ.GwmRL4.BmWozatx9O-NRq0I5vw1yD5YeBvsIjOLAERVAY";
 
         private readonly string _tmdbApiKey =
             "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZmY0MjcwZDU0NjMwMGIwZGQwMWQwZDQxZDMxNzI4NSIsIm5iZiI6MTc0ODE3NDA3OS41MjgsInN1YiI6IjY4MzMwNGZmZmE3YTc5YjgxMjgzNzk3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-shmT8xJanU1-5b5Y4cODGB7mlU8Va6sVNjME2EUHeI";
@@ -31,7 +31,7 @@ namespace MoviesAndSeriesBot
             _client.Ready += LoginAndScrape;
             
             _client.Log += LogFuncAsync;
-            await this._client.LoginAsync(TokenType.Bot, _token);
+            await this._client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("DISCORD_TOKEN"););
             await this._client.StartAsync();
             await Task.Delay(-1);
             
