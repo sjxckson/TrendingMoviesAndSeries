@@ -54,18 +54,26 @@ namespace MoviesAndSeriesBot
                 channel.DeleteMessageAsync((message)); 
                 Thread.Sleep(5000); 
             }
+            
+            ulong adminLogChannelId = 1376170892760973424;
+            IMessageChannel adminLogChannel = _client.GetChannel(adminLogChannelId) as IMessageChannel;
+            adminLogChannel.SendMessageAsync("Trending Movies Deleted");
         }
         
         private void DeleteTrendingSeriesMessages()
         {
-            ulong moviesTrendingChannel = 1376178433016594543;
-            IMessageChannel channel = _client.GetChannel(moviesTrendingChannel) as IMessageChannel;
+            ulong seriesTrendingChannel = 1376178433016594543;
+            IMessageChannel channel = _client.GetChannel(seriesTrendingChannel) as IMessageChannel;
             var messages = channel.GetMessagesAsync(100).FlattenAsync();
             foreach (var message in messages.Result)
             {
                 channel.DeleteMessageAsync((message));   
                 Thread.Sleep(5000);
             }
+            
+            ulong adminLogChannelId = 1376170892760973424;
+            IMessageChannel adminLogChannel = _client.GetChannel(adminLogChannelId) as IMessageChannel;
+            adminLogChannel.SendMessageAsync("Trending Series Deleted");
         }
 
         private void CallPopularMoviesAPI()
