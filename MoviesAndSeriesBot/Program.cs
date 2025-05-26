@@ -34,13 +34,13 @@ namespace MoviesAndSeriesBot
         public async Task LoginAndScrape()
         {
             DeleteTrendingMovieMessages();
-            Console.WriteLine($"");
+            Console.WriteLine($"{DateTime.Now.Date.ToShortDateString()} Deleted Trending Movie Messages");
             DeleteTrendingSeriesMessages();
-            Console.WriteLine($"");
+            Console.WriteLine($"{DateTime.Now.Date.ToShortDateString()} Deleted Trending Series Messages");
             CallPopularMoviesAPI();
-            Console.WriteLine($"");
+            Console.WriteLine($"{DateTime.Now.Date.ToShortDateString()} Posted Trending Movie Messages");
             CallPopularSeriesAPI();
-            Console.WriteLine($"");
+            Console.WriteLine($"{DateTime.Now.Date.ToShortDateString()} Posted Trending Series Messages");
             Environment.Exit(0);
         }
 
